@@ -1,6 +1,9 @@
 package epsilveira.league.persistence;
 
 import javax.persistence.*;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 public class Team {
@@ -10,14 +13,24 @@ public class Team {
 
     private String name;
 
-    private String region;
+    public enum Region {
+        NA, EUW, EUNE, LAN, LAS, BR, JP, RU, TR, OCE, KR
+    }
 
-    private Player top;
-    private Player mid;
-    private Player jungle;
-    private Player bot;
-    private Player support;
-    private Player coach;
+    @Enumerated(EnumType.STRING)
+    private Region region;
+
+    @OneToMany(mappedBy="team")
+    private Set<Player> players = new HashSet<Player>();
+
+    @OneToMany (mappedBy = "blueTeam", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+    private Set<Contest> matchesBlue = new HashSet<>();
+
+    @OneToMany (mappedBy = "redTeam", cascade = {CascadeType.REMOVE, CascadeType.PERSIST}, orphanRemoval = true)
+    private Set<Contest> matchesRed = new HashSet<>();
+
+    @OneToOne (mappedBy = "team")
+    private Coach coach;
 
 
     public int getId() {
@@ -32,65 +45,45 @@ public class Team {
         this.name = name;
     }
 
-    public String getRegion() {
+    public Region getRegion() {
         return region;
     }
 
-    public void setRegion(String region) {
+    public void setRegion(Region region) {
         this.region = region;
     }
 
-    @OneToOne
-    public Player getTop() {
-        return top;
+    public Set<Player> getPlayers() {
+        return Collections.unmodifiableSet(players);
     }
 
-    public void setTop(Player top) {
-        this.top = top;
+    public void addPlayer(Player player, Player.Position position) {
+        player.setTeam(this);
+        player.setPosition(position);
     }
 
-    @OneToOne
-    public Player getMid() {
-        return mid;
-    }
-
-    public void setMid(Player mid) {
-        this.mid = mid;
-    }
-
-    @OneToOne
-    public Player getJungle() {
-        return jungle;
-    }
-
-    public void setJungle(Player jungle) {
-        this.jungle = jungle;
-    }
-
-    @OneToOne
-    public Player getBot() {
-        return bot;
-    }
-
-    public void setBot(Player bot) {
-        this.bot = bot;
-    }
-
-    @OneToOne
-    public Player getSupport() {
-        return support;
-    }
-
-    public void setSupport(Player support) {
-        this.support = support;
-    }
-
-    @OneToOne
-    public Player getCoach() {
+    public Coach getCoach() {
         return coach;
     }
 
-    public void setCoach(Player coach) {
+    public void setCoach(Coach coach) {
+        if (this.coach != null) {
+            this.coach.setTeam(null);
+        }
+        if (coach != null) {
+            coach.setTeam(this);
+        }
+    }
+
+    public void internalSetCoach(Coach coach) {
         this.coach = coach;
     }
+
+    public Set<Contest> getContests(){
+        Set<Contest> toRet = new HashSet<>();
+        toRet.addAll(matchesBlue);
+        toRet.addAll(matchesRed);
+        return Collections.unmodifiableSet(toRet);
+    }
+
 }

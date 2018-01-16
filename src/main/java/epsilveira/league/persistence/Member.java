@@ -8,8 +8,8 @@ import javax.persistence.MappedSuperclass;
 @MappedSuperclass
 public abstract class Member {
     @Id
-    @GeneratedValue(strategy= GenerationType.IDENTITY)
-     int id;
+    @GeneratedValue(strategy=GenerationType.IDENTITY)
+    private int id;
     private String name;
 
     public int getId() {

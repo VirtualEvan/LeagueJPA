@@ -1,5 +1,10 @@
 package epsilveira.league.persistence;
 
+import org.junit.AfterClass;
+import org.junit.BeforeClass;
+
+import javax.persistence.EntityManagerFactory;
+import javax.persistence.Persistence;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.ResultSet;
@@ -29,4 +34,20 @@ public class SQLBasedTest {
 
         return rs.getInt(1);
     }
+
+    // EntityManagerFactory management
+    protected static EntityManagerFactory emf;
+
+    @BeforeClass
+    public static void setUpEntityManagerFactory() {
+        emf = Persistence.createEntityManagerFactory("si-database");
+    }
+
+    @AfterClass
+    public static void closeEntityManagerFactory() throws SQLException {
+        if (emf != null && emf.isOpen()) {
+            emf.close();
+        }
+    }
+
 }
