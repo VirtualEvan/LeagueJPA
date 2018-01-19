@@ -36,7 +36,7 @@ public class Contest {
         this.schedule = schedule;
     }
 
-    public void setMatch(Team blueTeam, Team redTeam, Date schedule) throws MirrorMatchException {
+    public void setContest(Team blueTeam, Team redTeam, Date schedule) throws MirrorMatchException {
         if(blueTeam == redTeam)
             throw new MirrorMatchException();
 

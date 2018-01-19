@@ -10,7 +10,7 @@ public class Contests {
         this.em = em;
     }
 
-    public List<Contests> findAll() {
+    public List<Contest> findAll() {
         return this.em.createQuery("SELECT match FROM Contest match").getResultList();
     }
 

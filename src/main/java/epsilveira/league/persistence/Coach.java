@@ -29,7 +29,13 @@ public class Coach extends Member{
         }
         this.team = team;
         if (this.team != null) {
+            if(this.team.getCoach() != null){
+                this.team.getCoach().internalSetTeam(null);
+            }
             this.team.internalSetCoach(this);
         }
+    }
+    public void internalSetTeam(Team team){
+        this.team = team;
     }
 }

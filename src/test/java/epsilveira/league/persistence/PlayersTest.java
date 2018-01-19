@@ -1,16 +1,11 @@
 package epsilveira.league.persistence;
 
 import static epsilveira.league.persistence.Player.Position.*;
-import static junit.framework.TestCase.assertTrue;
 import static org.junit.Assert.assertEquals;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.Arrays;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
 
 import javax.persistence.EntityManager;
 import org.junit.Test;
@@ -47,7 +42,7 @@ public class PlayersTest extends SQLBasedTest {
 
             player.setName("Bjergsen");
             player.setBirthYear(1994);
-            player.setPosition(mid);
+            player.setPosition(MID);
             player.setTeam(team);
 
             players.addPlayer(player);

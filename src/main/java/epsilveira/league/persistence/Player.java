@@ -1,5 +1,7 @@
 package epsilveira.league.persistence;
 
+import java.time.Year;
+
 import javax.persistence.*;
 
 @Entity
@@ -11,7 +13,7 @@ public class Player extends Member{
     private int birthYear;
 
     public enum Position {
-        top, mid, jungle, bot, support
+        TOP, MID, JUNGLE, BOT, SUPPORT
     }
 
     @ManyToOne
@@ -30,6 +32,10 @@ public class Player extends Member{
 
     public int getBirthYear() {
         return birthYear;
+    }
+
+    public int getAge(){
+        return Year.now().getValue() - birthYear;
     }
 
     public void setBirthYear(int birthYear) {

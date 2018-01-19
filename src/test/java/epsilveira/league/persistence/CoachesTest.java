@@ -7,7 +7,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-import static epsilveira.league.persistence.Player.Position.mid;
 import static org.junit.Assert.assertEquals;
 
 public class CoachesTest extends SQLBasedTest {

@@ -78,8 +78,8 @@ public class TeamsTest extends SQLBasedTest{
         int teamId = insertTeam("TSM", Team.Region.NA);
 
         // Insert related Player and Coach
-        insertPlayerInTeam("Dyrus", 1994, teamId, Player.Position.top);
-        insertPlayerInTeam("TheOddOne", 1993, teamId, Player.Position.jungle);
+        insertPlayerInTeam("Dyrus", 1994, teamId, Player.Position.TOP);
+        insertPlayerInTeam("TheOddOne", 1993, teamId, Player.Position.JUNGLE);
         insertCoachInTeam("Locodoco", 2015, teamId);
         EntityManager em = emf.createEntityManager();
 
@@ -107,6 +107,7 @@ public class TeamsTest extends SQLBasedTest{
 
         statement.executeUpdate("UPDATE Player set team_id = NULL WHERE team_id IS NOT NULL", Statement.RETURN_GENERATED_KEYS);
         statement.executeUpdate("UPDATE Coach set team_id = NULL WHERE team_id IS NOT NULL", Statement.RETURN_GENERATED_KEYS);
+        statement.executeUpdate("UPDATE Contest set blueTeam_id = NULL, redTeam_id = NULL", Statement.RETURN_GENERATED_KEYS);
         statement.executeUpdate("DELETE FROM Team", Statement.RETURN_GENERATED_KEYS);
 
 
